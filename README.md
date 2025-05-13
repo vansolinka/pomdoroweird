@@ -1,16 +1,20 @@
-# pomdoroweird
+# 🍅 Pomodoro Weird Clock
 
-A new Flutter project.
+A playful and experimental Pomodoro timer built with Flutter — designed to be weird, artsy, and visually delightful.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- Custom timer UI with responsive tomato image 🖼️
+- Break buttons with unique styling 🍓
+- Fully themeable color + font setup 🎨
+- Scalable layout across screen sizes 📱
+- Clean structure with reusable widgets (like buttons and logo) 🧩
 
-A few resources to get you started if this is your first Flutter project:
+## 💻 Built With
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter** — cross-platform UI toolkit
+- **Figma** — for prototyping the design
+- **Dart** — for all logic and animations
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📦 Project Structure
+
