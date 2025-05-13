@@ -32,7 +32,7 @@ class AppTextStyles {
     fontSize: 48,
     fontWeight: FontWeight.w900,
     color: AppColors.punchBerry,
-    fontFamily: 'PressStart2P',
+    fontFamily: 'Orbitron',
   );
 }
 
