@@ -33,6 +33,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w900,
     color: AppColors.punchBerry,
     fontFamily: 'Orbitron',
+    letterSpacing: 3
   );
 }
 

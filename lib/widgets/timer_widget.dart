@@ -5,18 +5,20 @@ import '../themes/app_theme.dart';
 class DigitalTimer extends StatefulWidget {
   final Duration initialTime;
   final TextStyle? textStyle;
+  final void Function(Duration)? onTick; // 👈 onTick callback
 
   const DigitalTimer({
     super.key,
     required this.initialTime,
     this.textStyle,
+    this.onTick, // 👈 Add it to the constructor too
   });
 
   @override
-  State<DigitalTimer> createState() => _DigitalTimerState();
+  State<DigitalTimer> createState() => DigitalTimerState();
 }
 
-class _DigitalTimerState extends State<DigitalTimer> {
+class DigitalTimerState extends State<DigitalTimer> {
   late Duration _remaining;
   Timer? _timer;
 
@@ -33,6 +35,7 @@ class _DigitalTimerState extends State<DigitalTimer> {
         setState(() {
           _remaining -= const Duration(seconds: 1);
         });
+        widget.onTick?.call(_remaining); // ✅ Call the onTick callback
       } else {
         _timer?.cancel();
       }
@@ -83,7 +86,7 @@ class StrokedText extends StatelessWidget {
     super.key,
     required this.text,
     required this.style,
-    this.strokeColor = AppColors.plumCalm,
+    this.strokeColor = Colors.black,
     this.strokeWidth = 2,
   });
 
@@ -91,7 +94,7 @@ class StrokedText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Stroke layer
+        // Stroke
         Text(
           text,
           style: style.copyWith(
@@ -101,7 +104,7 @@ class StrokedText extends StatelessWidget {
               ..color = strokeColor,
           ),
         ),
-        // Fill layer
+        // Fill
         Text(
           text,
           style: style,
