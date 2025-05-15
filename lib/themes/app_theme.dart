@@ -21,6 +21,12 @@ class AppTextStyles {
     color: AppColors.softTomato,
     fontFamily: 'Poppins',
   );
+    static const bodyMessages = TextStyle(
+    fontSize: 16,
+    color: AppColors.plumCalm,
+    fontFamily: 'Poppins',
+    letterSpacing: -1
+  );
     static const buttons = TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w500,

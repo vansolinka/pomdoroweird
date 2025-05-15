@@ -3,6 +3,8 @@ import '../themes/app_theme.dart';
 import '../widgets/tomato_display.dart';
 import '../widgets/buttons.dart';
 import '../widgets/logo.dart';
+import 'short_break.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,7 +32,12 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       BreakButton(
                         label: 'Short Break',
-                        onPressed: () => print('Short Break'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ShortBreakScreen()),
+                          );
+                        },
                       ),
                       BreakButton(
                         label: 'Long Break',
@@ -39,7 +46,15 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 130), // space to make room for the logo overlap
-                  TomatoDisplay(size: screenWidth * 0.9),
+                  TomatoDisplay(
+                    size: screenWidth * 0.9,
+                    duration: const Duration(minutes: 25),
+                    startPulse: 1440,
+                    breakTomato: 1430,
+                    onStart: () {
+                      
+                    },
+                    ),
                 ],
               ),
             ),

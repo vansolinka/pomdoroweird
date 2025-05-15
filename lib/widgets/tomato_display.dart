@@ -5,8 +5,20 @@ import 'timer_widget.dart';
 
 class TomatoDisplay extends StatefulWidget {
   final double size;
+  final Duration duration;
+  final int startPulse;
+  final int breakTomato;
+  final VoidCallback? onStart;
 
-  const TomatoDisplay({super.key, required this.size});
+
+  const TomatoDisplay({
+    super.key, 
+    required this.size,
+    required this.duration,
+    required this.startPulse,
+    required this.breakTomato,
+    required this.onStart
+    });
 
   @override
   State<TomatoDisplay> createState() => _TomatoDisplayState();
@@ -113,14 +125,14 @@ class _TomatoDisplayState extends State<TomatoDisplay>
           top: 165,
           child: DigitalTimer(
             key: timerKey,
-            initialTime: const Duration(minutes: 25),
+            initialTime: widget.duration,
             textStyle: AppTextStyles.timer.copyWith(fontSize: 52),
             onTick: (remaining) {
-              if (remaining.inSeconds <= 1440 && !_isFastBreathing) {
+              if (remaining.inSeconds <= widget.startPulse && !_isFastBreathing) {
                 setFastPulse(); // starts at 24 minute for testing, later change for 300 seconds already working
               }
 
-              if (remaining.inSeconds == 1430 && !_isCracked) {
+              if (remaining.inSeconds == widget.breakTomato && !_isCracked) {
                 setState(() {
                   _isCracked = true;
                 });
@@ -142,6 +154,7 @@ class _TomatoDisplayState extends State<TomatoDisplay>
               onTap: () {
                 timerKey.currentState?.startTimer();
                 startTomatoPulse();
+                widget.onStart?.call(); 
                 setState(() {
                   _isCracked = false;
                 });
