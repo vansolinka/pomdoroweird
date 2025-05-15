@@ -3,20 +3,20 @@ import '../themes/app_theme.dart';
 import '../widgets/tomato_display.dart';
 import '../widgets/buttons.dart';
 import '../widgets/break_messages.dart';
-import 'long_break.dart';
+import 'short_break.dart';
 import 'home_screen.dart';
 import 'dart:math';
 
-class ShortBreakScreen extends StatefulWidget {
-  const ShortBreakScreen({super.key});
+class LongBreakScreen extends StatefulWidget {
+  const LongBreakScreen({super.key});
 
   @override
-  State<ShortBreakScreen> createState() => _ShortBreakScreenState();
+  State<LongBreakScreen> createState() => _LongBreakScreenState();
 }
 
-class _ShortBreakScreenState extends State<ShortBreakScreen> {
-  String _message = shortBreakMessages[0];
-  
+class _LongBreakScreenState extends State<LongBreakScreen> {
+  String _message = longBreakMessages[0];
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
   void _refreshMessage() {
     final random = Random();
     setState(() {
-      _message = shortBreakMessages[random.nextInt(shortBreakMessages.length)];
+      _message = longBreakMessages[random.nextInt(longBreakMessages.length)];
     });
   }
 
@@ -35,7 +35,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.mintFocus,
+      backgroundColor: AppColors.stormyMist,
       body: SafeArea(
         child: Stack(
           alignment: Alignment.center,
@@ -54,12 +54,12 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                       Center(
                         child: BreakButton(
                           label: 'Pomodoro weird',
-                         onPressed: () {
+                          onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => const HomeScreen()),
                               );
-                        }, // sta
+                        },
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -74,7 +74,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                                 context,
                                 MaterialPageRoute(builder: (context) => const ShortBreakScreen()),
                               );
-                        }, // stays here
+                        },
                           ),
                           BreakButton(
                             label: 'Long Break',
@@ -83,7 +83,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                                 context,
                                 MaterialPageRoute(builder: (context) => const LongBreakScreen()),
                               );
-                        }, // stays here
+                            },
                           ),
                         ],
                       ),
@@ -114,7 +114,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                   const SizedBox(height: 40),
                   TomatoDisplay(
                     size: screenWidth * 0.9,
-                    duration: const Duration(minutes: 5),
+                    duration: const Duration(minutes: 15),
                     startPulse: 120,
                     breakTomato: 0,
                     onStart: _refreshMessage, // 👈 this gets called when Play is pressed

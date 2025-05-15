@@ -4,6 +4,7 @@ import '../widgets/tomato_display.dart';
 import '../widgets/buttons.dart';
 import '../widgets/logo.dart';
 import 'short_break.dart';
+import 'long_break.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -41,7 +42,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                       BreakButton(
                         label: 'Long Break',
-                        onPressed: () => print('Long Break'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LongBreakScreen()),
+                          );
+                        },
                       ),
                     ],
                   ),

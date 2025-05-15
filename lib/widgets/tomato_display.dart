@@ -154,7 +154,6 @@ class _TomatoDisplayState extends State<TomatoDisplay>
               onTap: () {
                 timerKey.currentState?.startTimer();
                 startTomatoPulse();
-                widget.onStart?.call(); 
                 setState(() {
                   _isCracked = false;
                 });
@@ -190,6 +189,7 @@ class _TomatoDisplayState extends State<TomatoDisplay>
               onTap: () {
                 timerKey.currentState?.resetTimer();
                 stopTomatoPulse();
+                widget.onStart?.call(); 
                 setState(() {
                   _isCracked = false;
                 });
