@@ -29,7 +29,7 @@ class AppTextStyles {
     letterSpacing: -1
   );
     static const buttons = TextStyle(
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: FontWeight.w500,
     color: AppColors.softTomato,
     fontFamily: 'Nunito',

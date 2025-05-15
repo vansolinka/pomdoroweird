@@ -32,11 +32,12 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Row for the two buttons
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      BreakButton(
+                      Expanded(
+                      child:BreakButton(
                         label: 'Short Break',
                         onPressed: () {
                           Navigator.push(
@@ -44,8 +45,11 @@ class HomeScreen extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => const ShortBreakScreen()),
                           );
                         },
+                        ),
                       ),
-                      BreakButton(
+                      const SizedBox(width: 16,),
+                      Expanded(
+                      child:BreakButton(  
                         label: 'Long Break',
                         onPressed: () {
                           Navigator.push(
@@ -54,9 +58,10 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                       ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 130), // space to make room for the logo overlap
+                  const SizedBox(height: 160), // space to make room for the logo overlap
                   TomatoDisplay(
                       size: screenWidth * 0.9,
                       duration: const Duration(minutes: 1),

@@ -46,7 +46,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 60),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -64,29 +64,34 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                       ),
                       const SizedBox(height: 16),
                       // Bottom Row: Short & Long Break
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          BreakButton(
-                            label: 'Short Break',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const ShortBreakScreen()),
-                              );
-                        },
-                          ),
-                          BreakButton(
-                            label: 'Long Break',
-                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const LongBreakScreen()),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: BreakButton(
+                                label: 'Short Break',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const ShortBreakScreen()),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 16), // spacing between buttons
+                            Expanded(
+                              child: BreakButton(
+                                label: 'Long Break',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const LongBreakScreen()),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+
                       const SizedBox(height: 60),
                       // 💬 Message Bubble
                       Container(

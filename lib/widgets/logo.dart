@@ -21,11 +21,11 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     _controller = AnimationController(
       duration: const Duration(seconds: 10),
       vsync: this,
-    )..repeat(); // makes it loop forever
+    )..repeat();
 
     _angleAnimation = Tween<double>(
-      begin: -pi / 2, // top center
-      end: -pi / 2 + 2 * pi, // full rotation
+      begin: -pi / 2,
+      end: -pi / 2 + 2 * pi,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.linear,
@@ -38,19 +38,27 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _angleAnimation,
-      builder: (context, child) {
-        return ArcText(
-          radius: 160,
-          text: 'POMODORO WEIRD',
-          textStyle: AppTextStyles.logo,
-          startAngle: _angleAnimation.value,
-          placement: Placement.outside,
-        );
-      },
-    );
-  }
+@override
+Widget build(BuildContext context) {
+
+  // Shrink the arc radius based on screen size
+ final tomatoSize = MediaQuery.of(context).size.width.clamp(320.0, 400.0);
+final arcRadius = tomatoSize / 2.5; // or 2.2 to make it tighter
+
+
+  return AnimatedBuilder(
+    animation: _angleAnimation,
+    builder: (context, child) {
+      return ArcText(
+        radius: arcRadius,
+        text: 'POMODORO WEIRD',
+        textStyle: AppTextStyles.logo, // ✅ fixed size
+        startAngle: _angleAnimation.value,
+        placement: Placement.outside,
+      );
+    },
+  );
+}
+
+
 }

@@ -4,23 +4,22 @@ import '../themes/app_theme.dart';
 import 'timer_widget.dart';
 
 class TomatoDisplay extends StatefulWidget {
-  final double size;
+  final double? size;
   final Duration duration;
   final int startPulse;
   final int breakTomato;
   final VoidCallback? onStart;
   final VoidCallback? onComplete;
 
-
   const TomatoDisplay({
-    super.key, 
-    required this.size,
+    super.key,
+    this.size,
     required this.duration,
     required this.startPulse,
     required this.breakTomato,
     required this.onStart,
     this.onComplete,
-    });
+  });
 
   @override
   State<TomatoDisplay> createState() => _TomatoDisplayState();
@@ -34,7 +33,6 @@ class _TomatoDisplayState extends State<TomatoDisplay>
   bool _isFastBreathing = false;
   bool _isPulsing = false;
   bool _isCracked = false;
-
 
   @override
   void initState() {
@@ -63,7 +61,7 @@ class _TomatoDisplayState extends State<TomatoDisplay>
     _isFastBreathing = false;
     _isPulsing = false;
     _controller.duration = const Duration(seconds: 2);
-    setState(() {}); // ⚠️ force UI update when hiding pulse
+    setState(() {});
   }
 
   void setFastPulse() {
@@ -110,6 +108,15 @@ class _TomatoDisplayState extends State<TomatoDisplay>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isSmallScreen = screenHeight < 700 || screenWidth < 390;
+
+    final double size = widget.size ??
+        (isSmallScreen ? screenWidth * 0.68 : screenWidth * 0.9);
+
+    final double timerOffset = size * (isSmallScreen ? 0.45 : 0.43);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -117,42 +124,45 @@ class _TomatoDisplayState extends State<TomatoDisplay>
         _animatedOrStatic(
           child: Image.asset(
             _isCracked ? AppAssets.tomatoCrackedImage : AppAssets.tomatoImage,
-            width: widget.size,
-            height: widget.size,
-          )
+            width: size,
+            height: size,
+          ),
         ),
 
         // ⏱️ Digital Timer
         Positioned(
-          top: 165,
+          top: timerOffset,
           child: DigitalTimer(
             key: timerKey,
             initialTime: widget.duration,
-            textStyle: AppTextStyles.timer.copyWith(fontSize: 52),
+            textStyle: AppTextStyles.timer.copyWith(
+              fontSize: isSmallScreen ? 44 : 52,
+            ),
             onTick: (remaining) {
-              if (remaining.inSeconds <= widget.startPulse && !_isFastBreathing) {
-                setFastPulse(); // starts at 24 minute for testing, later change for 300 seconds already working
+              if (remaining.inSeconds <= widget.startPulse &&
+                  !_isFastBreathing) {
+                setFastPulse();
               }
-              if (remaining.inSeconds == widget.breakTomato && !_isCracked) {
+              if (remaining.inSeconds == widget.breakTomato &&
+                  !_isCracked) {
                 setState(() {
                   _isCracked = true;
                 });
                 stopTomatoPulse();
-                widget.onComplete?.call(); // ✅ trigger pop-up
+                widget.onComplete?.call();
               }
             },
-
           ),
         ),
 
         // ▶️ Play
         Positioned(
-          bottom: 60,
-          left: 150,
+          bottom: size * 0.17,
+          left: size * 0.41,
           child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.playButton,
-              size: 48,
+              size: size * 0.13,
               onTap: () {
                 timerKey.currentState?.startTimer();
                 startTomatoPulse();
@@ -166,12 +176,12 @@ class _TomatoDisplayState extends State<TomatoDisplay>
 
         // ⏸ Pause
         Positioned(
-          bottom: 65,
-          left: 210,
+          bottom: size * 0.19,
+          left: size * 0.58,
           child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.pauseButton,
-              size: 48,
+              size: size * 0.13,
               onTap: () {
                 timerKey.currentState?.pauseTimer();
                 stopTomatoPulse();
@@ -182,20 +192,20 @@ class _TomatoDisplayState extends State<TomatoDisplay>
 
         // 🔁 Reset
         Positioned(
-          bottom: 55,
-          left: 90,
+          bottom: size * 0.17,
+          left: size * 0.23,
           child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.replayButton,
-              size: 70,
+              size: size * 0.19,
               onTap: () {
                 timerKey.currentState?.resetTimer();
                 stopTomatoPulse();
-                widget.onStart?.call(); 
+                widget.onStart?.call();
                 setState(() {
                   _isCracked = false;
                 });
-             },
+              },
             ),
           ),
         ),
