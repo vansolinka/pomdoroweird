@@ -5,6 +5,10 @@ import '../widgets/buttons.dart';
 import '../widgets/logo.dart';
 import 'short_break.dart';
 import 'long_break.dart';
+import '../widgets/break_messages.dart';
+import '../widgets/pomodoro_dialog.dart';
+import 'dart:math';
+
 
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +17,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    
+    
     return Scaffold(
       backgroundColor: AppColors.plumCalm,
       body: SafeArea(
@@ -53,13 +58,21 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 130), // space to make room for the logo overlap
                   TomatoDisplay(
-                    size: screenWidth * 0.9,
-                    duration: const Duration(minutes: 25),
-                    startPulse: 1440,
-                    breakTomato: 1430,
-                    onStart: () {
-                      
-                    },
+                      size: screenWidth * 0.9,
+                      duration: const Duration(minutes: 1),
+                      startPulse: 10,
+                      breakTomato: 0,
+                      onStart: () {}, // or real function
+                       onComplete: () {
+                        final random = Random();
+                        final message = endPomodoroMessages[random.nextInt(endPomodoroMessages.length)];
+
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => PomodoroEndDialog(message: message),
+                        );
+                      },
                     ),
                 ],
               ),

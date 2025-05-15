@@ -9,6 +9,7 @@ class TomatoDisplay extends StatefulWidget {
   final int startPulse;
   final int breakTomato;
   final VoidCallback? onStart;
+  final VoidCallback? onComplete;
 
 
   const TomatoDisplay({
@@ -17,7 +18,8 @@ class TomatoDisplay extends StatefulWidget {
     required this.duration,
     required this.startPulse,
     required this.breakTomato,
-    required this.onStart
+    required this.onStart,
+    this.onComplete,
     });
 
   @override
@@ -131,12 +133,12 @@ class _TomatoDisplayState extends State<TomatoDisplay>
               if (remaining.inSeconds <= widget.startPulse && !_isFastBreathing) {
                 setFastPulse(); // starts at 24 minute for testing, later change for 300 seconds already working
               }
-
               if (remaining.inSeconds == widget.breakTomato && !_isCracked) {
                 setState(() {
                   _isCracked = true;
                 });
-                stopTomatoPulse(); // happens at 23:50 for testing pourposes, change to 0 in production optional: stop the animation
+                stopTomatoPulse();
+                widget.onComplete?.call(); // ✅ trigger pop-up
               }
             },
 

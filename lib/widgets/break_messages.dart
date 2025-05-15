@@ -23,3 +23,16 @@ const List<String> longBreakMessages = [
   "Get cozy. Or weird. Your choice. 🐛",
   "This break contains zero guilt and one imaginary blanket. 🛋️",
 ];
+
+const List<String> endPomodoroMessages = [
+  "You stayed focused. Somewhere, a tomato sheds a proud tear. 🥲",
+  "You didn’t scroll. You slayed. Productivity? Served hot. 🔥",
+  "You vs. Distraction? You just bodied it. 🥊",
+  "Your brain did a full push-up. Take a break, champ. 💪",
+  "If focus were currency, you’d own three imaginary islands. 🏝️",
+  "You crushed that like a spaghetti sauce audition. 🍝",
+  "No tabs opened. No snacks demolished. Legend behavior. 🧠",
+  "You didn’t become a mushroom. That’s growth. 🍄",
+  "Even your to-do list is whispering: ‘wow.’ 📋",
+  "Focus: completed. Chaos: postponed. Break: deserved. 🛋️",
+];
