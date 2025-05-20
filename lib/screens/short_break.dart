@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../themes/app_theme.dart';
 import '../widgets/tomato_display.dart';
@@ -5,7 +6,7 @@ import '../widgets/buttons.dart';
 import '../widgets/break_messages.dart';
 import 'long_break.dart';
 import 'home_screen.dart';
-import 'dart:math';
+import '../utils/app_responsive.dart'; // ✅ Responsive helper
 
 class ShortBreakScreen extends StatefulWidget {
   const ShortBreakScreen({super.key});
@@ -16,7 +17,7 @@ class ShortBreakScreen extends StatefulWidget {
 
 class _ShortBreakScreenState extends State<ShortBreakScreen> {
   String _message = shortBreakMessages[0];
-  
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final r = AppResponsive(context); // ✅ Initialize responsive helper
 
     return Scaffold(
       backgroundColor: AppColors.mintFocus,
@@ -40,30 +41,30 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Main scrollable content
             SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 60),
+                  SizedBox(height: r.responsiveSize(40, 60)),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Top: Pomodoro Button
                       Center(
                         child: BreakButton(
                           label: 'Pomodoro weird',
-                         onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const HomeScreen()),
-                              );
-                        }, // sta
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      // Bottom Row: Short & Long Break
+
+                      SizedBox(height: r.responsiveSize(12, 16)),
+
                       Row(
                         children: [
                           Expanded(
@@ -77,7 +78,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(width: 16), // spacing between buttons
+                          SizedBox(width: r.responsiveSize(12, 16)),
                           Expanded(
                             child: BreakButton(
                               label: 'Long Break',
@@ -92,8 +93,8 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                         ],
                       ),
 
-                      const SizedBox(height: 60),
-                      // 💬 Message Bubble
+                      SizedBox(height: r.responsiveSize(40, 60)),
+
                       Container(
                         margin: const EdgeInsets.only(top: 16),
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -111,18 +112,22 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                         child: Text(
                           _message,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.bodyMessages,
+                          style: AppTextStyles.bodyMessages.copyWith(
+                            fontSize: r.fontSize(16),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
+
+                  SizedBox(height: r.responsiveSize(30, 40)),
+
                   TomatoDisplay(
-                    size: screenWidth * 0.9,
+                    size: r.widthPercent(r.isSmallScreen ? 0.87 : 0.9),
                     duration: const Duration(minutes: 5),
                     startPulse: 120,
                     breakTomato: 0,
-                    onStart: _refreshMessage, // 👈 this gets called when Play is pressed
+                    onStart: _refreshMessage,
                   ),
                 ],
               ),

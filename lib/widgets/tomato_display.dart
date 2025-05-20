@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../themes/app_assets.dart';
 import '../themes/app_theme.dart';
+import '../utils/app_responsive.dart';
 import 'timer_widget.dart';
 
 class TomatoDisplay extends StatefulWidget {
@@ -10,6 +11,8 @@ class TomatoDisplay extends StatefulWidget {
   final int breakTomato;
   final VoidCallback? onStart;
   final VoidCallback? onComplete;
+  final VoidCallback? onReset; // 👈 NEW
+
 
   const TomatoDisplay({
     super.key,
@@ -19,13 +22,14 @@ class TomatoDisplay extends StatefulWidget {
     required this.breakTomato,
     required this.onStart,
     this.onComplete,
+    this.onReset,
   });
 
-  @override
-  State<TomatoDisplay> createState() => _TomatoDisplayState();
+ @override
+  TomatoDisplayState createState() => TomatoDisplayState(); // ✅ match the public class name
 }
 
-class _TomatoDisplayState extends State<TomatoDisplay>
+class TomatoDisplayState extends State<TomatoDisplay>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -46,6 +50,13 @@ class _TomatoDisplayState extends State<TomatoDisplay>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
+    void resetFromOutside() {
+      timerKey.currentState?.resetTimer();
+      stopTomatoPulse();
+      setState(() {
+        _isCracked = false;
+      });
+    }
 
   void startTomatoPulse() {
     _isFastBreathing = false;
@@ -108,14 +119,10 @@ class _TomatoDisplayState extends State<TomatoDisplay>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final isSmallScreen = screenHeight < 700 || screenWidth < 390;
+  final r = AppResponsive(context);
 
-    final double size = widget.size ??
-        (isSmallScreen ? screenWidth * 0.68 : screenWidth * 0.9);
-
-    final double timerOffset = size * (isSmallScreen ? 0.45 : 0.43);
+  final double size = widget.size ?? r.widthPercent(r.isSmallScreen ? 0.8 : 0.9);
+  final double timerOffset = size * r.responsiveSize(0.45, 0.43);
 
     return Stack(
       alignment: Alignment.center,
@@ -136,7 +143,7 @@ class _TomatoDisplayState extends State<TomatoDisplay>
             key: timerKey,
             initialTime: widget.duration,
             textStyle: AppTextStyles.timer.copyWith(
-              fontSize: isSmallScreen ? 44 : 52,
+              fontSize: r.fontSize(54),
             ),
             onTick: (remaining) {
               if (remaining.inSeconds <= widget.startPulse &&
@@ -198,14 +205,15 @@ class _TomatoDisplayState extends State<TomatoDisplay>
             child: _buildIconButton(
               assetPath: AppAssets.replayButton,
               size: size * 0.19,
-              onTap: () {
-                timerKey.currentState?.resetTimer();
-                stopTomatoPulse();
-                widget.onStart?.call();
-                setState(() {
-                  _isCracked = false;
-                });
-              },
+                onTap: () {
+                  timerKey.currentState?.resetTimer();
+                  stopTomatoPulse();
+                  widget.onStart?.call();
+                  widget.onReset?.call(); // 👈 trigger external reset if needed
+                  setState(() {
+                    _isCracked = false;
+                  });
+                },
             ),
           ),
         ),

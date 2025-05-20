@@ -17,7 +17,7 @@ class PomodoroApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         fontFamily: 'RobotoMono', // optional weird font if you use it
       ),
-      home: const HomeScreen(), // 👈 your landing page
+      home: HomeScreen(), // 👈 your landing page
     );
   }
 }
