@@ -43,13 +43,13 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
           children: [
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                horizontal: r.responsiveSize(20, 24),
-                vertical: r.responsiveSize(28, 32),
+                horizontal: r.tieredSize(small: 20, medium: 24, tablet: 40),
+                vertical: r.tieredSize(small: 28, medium: 32, tablet: 48),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: r.responsiveSize(40, 60)),
+                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
 
                   Center(
                     child: BreakButton(
@@ -63,7 +63,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     ),
                   ),
 
-                  SizedBox(height: r.responsiveSize(12, 16)),
+                  SizedBox(height: r.tieredSize(small: 12, medium: 16, tablet: 24)),
 
                   Row(
                     children: [
@@ -78,7 +78,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                           },
                         ),
                       ),
-                      SizedBox(width: r.responsiveSize(12, 16)),
+                      SizedBox(width: r.tieredSize(small: 12, medium: 16, tablet: 24)),
                       Expanded(
                         child: BreakButton(
                           label: 'Long Break',
@@ -93,13 +93,13 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     ],
                   ),
 
-                  SizedBox(height: r.responsiveSize(40, 60)),
+                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
 
                   Container(
-                    margin: EdgeInsets.only(top: r.responsiveSize(12, 16)),
+                    margin: EdgeInsets.only(top: r.tieredSize(small: 12, medium: 16, tablet: 24)),
                     padding: EdgeInsets.symmetric(
-                      horizontal: r.responsiveSize(16, 20),
-                      vertical: r.responsiveSize(10, 12),
+                      horizontal: r.tieredSize(small: 16, medium: 20, tablet: 28),
+                      vertical: r.tieredSize(small: 10, medium: 12, tablet: 18),
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.softTomato,
@@ -121,10 +121,10 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     ),
                   ),
 
-                  SizedBox(height: r.responsiveSize(30, 40)),
+                  SizedBox(height: r.tieredSize(small: 30, medium: 40, tablet: 45)),
 
                   TomatoDisplay(
-                    size: r.widthPercent(r.isSmallScreen ? 0.87 : 0.9),
+                    size: r.tieredSize(small: r.widthPercent(0.87), medium: r.widthPercent(0.9), tablet: r.widthPercent(0.91)),
                     duration: const Duration(minutes: 15),
                     startPulse: 120,
                     breakTomato: 0,

@@ -13,7 +13,7 @@ import '../utils/app_responsive.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final GlobalKey<TomatoDisplayState> tomatoKey = GlobalKey<TomatoDisplayState>(); // ✅ Key to control timer
+  final GlobalKey<TomatoDisplayState> tomatoKey = GlobalKey<TomatoDisplayState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: r.responsiveSize(40, 60)),
+                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
 
                   // Break buttons
                   Row(
@@ -63,12 +63,13 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: r.responsiveSize(100, 160)),
+                  // 🆕 Adjust vertical space before Tomato
+                  SizedBox(height: r.tieredSize(small: 100, medium: 140, tablet: 180)),
 
-                  // Tomato Clock
+                  // 🍅 Tomato Clock with capped max width
                   TomatoDisplay(
-                    key: tomatoKey, // ✅ apply key
-                    size: r.widthPercent(r.isSmallScreen ? 0.87 : 0.9),
+                    key: tomatoKey,
+                    
                     duration: const Duration(minutes: 1),
                     startPulse: 10,
                     breakTomato: 0,
@@ -83,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         builder: (context) => PomodoroEndDialog(
                           message: message,
                           onReplay: () {
-                            tomatoKey.currentState?.resetFromOutside(); // ✅ reset timer from dialog
+                            tomatoKey.currentState?.resetFromOutside();
                           },
                         ),
                       );
@@ -97,10 +98,12 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Orbiting logo
-            Positioned(
-              top: r.responsiveSize(400, 500),
-              child: const AppLogo(),
+           Positioned(
+            top: r.tieredSize(small: 400, medium: 490, tablet: 570), // 📏 adjust if needed
+            child: AppLogo(
+              size: r.tieredSize(small: 340, medium: 380, tablet: 540), // 🌀 size for arc
             ),
+          ),
           ],
         ),
       ),

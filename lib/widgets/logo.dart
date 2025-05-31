@@ -4,7 +4,9 @@ import 'package:flutter_arc_text/flutter_arc_text.dart';
 import '../themes/app_theme.dart';
 
 class AppLogo extends StatefulWidget {
-  const AppLogo({super.key});
+  final double? size; // 🆕 optional custom size
+
+  const AppLogo({super.key, this.size});
 
   @override
   State<AppLogo> createState() => _AppLogoState();
@@ -38,27 +40,24 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-@override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    // 👇 Use passed size or fallback to responsive screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final logoSize = widget.size ?? screenWidth.clamp(320.0, 400.0);
+    final arcRadius = logoSize / 2.5;
 
-  // Shrink the arc radius based on screen size
- final tomatoSize = MediaQuery.of(context).size.width.clamp(320.0, 400.0);
-final arcRadius = tomatoSize / 2.5; // or 2.2 to make it tighter
-
-
-  return AnimatedBuilder(
-    animation: _angleAnimation,
-    builder: (context, child) {
-      return ArcText(
-        radius: arcRadius,
-        text: 'POMODORO WEIRD',
-        textStyle: AppTextStyles.logo, // ✅ fixed size
-        startAngle: _angleAnimation.value,
-        placement: Placement.outside,
-      );
-    },
-  );
-}
-
-
+    return AnimatedBuilder(
+      animation: _angleAnimation,
+      builder: (context, child) {
+        return ArcText(
+          radius: arcRadius,
+          text: 'POMODORO WEIRD',
+          textStyle: AppTextStyles.logo,
+          startAngle: _angleAnimation.value,
+          placement: Placement.outside,
+        );
+      },
+    );
+  }
 }

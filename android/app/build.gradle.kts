@@ -6,9 +6,9 @@ plugins {
 }
 
 android {
+    ndkVersion = "27.0.12077973" // ✅ Add this line
     namespace = "com.example.pomdoroweird"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
