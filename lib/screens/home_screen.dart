@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   TomatoDisplay(
                     key: tomatoKey,
                     
-                    duration: const Duration(minutes: 1),
+                    duration: const Duration(minutes: 25),
                     startPulse: 10,
                     breakTomato: 0,
                     onStart: () {},
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onReset: () {
-                      print('Timer was reset via dialog.');
+                      
                     },
                   ),
                 ],
