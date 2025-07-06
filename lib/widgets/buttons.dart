@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../themes/app_theme.dart';
+import '../utils/responsive.dart';
+
 
 class BreakButton extends StatelessWidget {
   final String label;
@@ -13,6 +15,7 @@ class BreakButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Responsive.init(context);
     return Material(
       color: AppColors.punchBerry,
       shape: RoundedRectangleBorder(
@@ -23,12 +26,15 @@ class BreakButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(24),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: EdgeInsets.symmetric(
+            horizontal: Responsive.w(6),   // 6% of screen width
+            vertical: Responsive.h(1.8),   // 1.8% of screen height
+          ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               label,
-              style: AppTextStyles.buttons,
+              style: AppTextStyles.buttons.copyWith(fontSize: Responsive.sp(2.2)),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

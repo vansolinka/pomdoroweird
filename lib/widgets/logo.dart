@@ -2,9 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_arc_text/flutter_arc_text.dart';
 import '../themes/app_theme.dart';
+import '../utils/responsive.dart';
 
 class AppLogo extends StatefulWidget {
-  final double? size; // 🆕 optional custom size
+  final double? size;
 
   const AppLogo({super.key, this.size});
 
@@ -42,9 +43,9 @@ class _AppLogoState extends State<AppLogo> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // 👇 Use passed size or fallback to responsive screen width
-    final screenWidth = MediaQuery.of(context).size.width;
-    final logoSize = widget.size ?? screenWidth.clamp(320.0, 400.0);
+    Responsive.init(context);
+
+    final logoSize = widget.size ?? Responsive.screenWidth.clamp(320.0, 400.0);
     final arcRadius = logoSize / 2.5;
 
     return AnimatedBuilder(

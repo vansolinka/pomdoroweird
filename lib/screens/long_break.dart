@@ -6,7 +6,7 @@ import '../widgets/buttons.dart';
 import '../widgets/break_messages.dart';
 import 'short_break.dart';
 import 'home_screen.dart';
-import '../utils/app_responsive.dart';
+import '../utils/responsive.dart';
 
 class LongBreakScreen extends StatefulWidget {
   const LongBreakScreen({super.key});
@@ -33,7 +33,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final r = AppResponsive(context);
+    Responsive.init(context);
 
     return Scaffold(
       backgroundColor: AppColors.stormyMist,
@@ -43,13 +43,13 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
           children: [
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                horizontal: r.tieredSize(small: 20, medium: 24, tablet: 40),
-                vertical: r.tieredSize(small: 28, medium: 32, tablet: 48),
+                horizontal: Responsive.w(6),   // ~24 on 400px screen
+                vertical: Responsive.h(4.5),   // ~32 on 700px screen
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
+                  SizedBox(height: Responsive.h(6)),
 
                   Center(
                     child: BreakButton(
@@ -63,7 +63,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     ),
                   ),
 
-                  SizedBox(height: r.tieredSize(small: 12, medium: 16, tablet: 24)),
+                  SizedBox(height: Responsive.h(2)),
 
                   Row(
                     children: [
@@ -78,7 +78,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                           },
                         ),
                       ),
-                      SizedBox(width: r.tieredSize(small: 12, medium: 16, tablet: 24)),
+                      SizedBox(width: Responsive.w(4)),
                       Expanded(
                         child: BreakButton(
                           label: 'Long Break',
@@ -93,13 +93,13 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     ],
                   ),
 
-                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
+                  SizedBox(height: Responsive.h(6)),
 
                   Container(
-                    margin: EdgeInsets.only(top: r.tieredSize(small: 12, medium: 16, tablet: 24)),
+                    margin: EdgeInsets.only(top: Responsive.h(2)),
                     padding: EdgeInsets.symmetric(
-                      horizontal: r.tieredSize(small: 16, medium: 20, tablet: 28),
-                      vertical: r.tieredSize(small: 10, medium: 12, tablet: 18),
+                      horizontal: Responsive.w(5),
+                      vertical: Responsive.h(1.5),
                     ),
                     decoration: BoxDecoration(
                       color: AppColors.softTomato,
@@ -116,15 +116,15 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                       _message,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.bodyMessages.copyWith(
-                        fontSize: r.fontSize(16),
+                        fontSize: Responsive.sp(2.2),
                       ),
                     ),
                   ),
 
-                  SizedBox(height: r.tieredSize(small: 30, medium: 40, tablet: 45)),
+                  SizedBox(height: Responsive.h(2)),
 
                   TomatoDisplay(
-                    size: r.tieredSize(small: r.widthPercent(0.87), medium: r.widthPercent(0.9), tablet: r.widthPercent(0.91)),
+                    size: min(Responsive.w(90), 600),
                     duration: const Duration(minutes: 15),
                     startPulse: 120,
                     breakTomato: 0,

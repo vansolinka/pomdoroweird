@@ -6,7 +6,7 @@ import '../widgets/buttons.dart';
 import '../widgets/break_messages.dart';
 import 'long_break.dart';
 import 'home_screen.dart';
-import '../utils/app_responsive.dart'; // ✅ Responsive helper
+import '../utils/responsive.dart';
 
 class ShortBreakScreen extends StatefulWidget {
   const ShortBreakScreen({super.key});
@@ -33,7 +33,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final r = AppResponsive(context); // ✅ Initialize responsive helper
+    Responsive.init(context);
 
     return Scaffold(
       backgroundColor: AppColors.mintFocus,
@@ -46,7 +46,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: r.responsiveSize(40, 60)),
+                  SizedBox(height: Responsive.h(6)),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +63,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                         ),
                       ),
 
-                      SizedBox(height: r.responsiveSize(12, 16)),
+                      SizedBox(height: Responsive.h(2)),
 
                       Row(
                         children: [
@@ -78,7 +78,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                               },
                             ),
                           ),
-                          SizedBox(width: r.responsiveSize(12, 16)),
+                          SizedBox(width: Responsive.w(4)),
                           Expanded(
                             child: BreakButton(
                               label: 'Long Break',
@@ -93,7 +93,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                         ],
                       ),
 
-                      SizedBox(height: r.responsiveSize(40, 60)),
+                      SizedBox(height: Responsive.h(6)),
 
                       Container(
                         margin: const EdgeInsets.only(top: 16),
@@ -113,17 +113,17 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                           _message,
                           textAlign: TextAlign.center,
                           style: AppTextStyles.bodyMessages.copyWith(
-                            fontSize: r.fontSize(16),
+                            fontSize: Responsive.sp(2.2),
                           ),
                         ),
                       ),
                     ],
                   ),
 
-                  SizedBox(height: r.responsiveSize(30, 40)),
+                  SizedBox(height: Responsive.h(2)),
 
                   TomatoDisplay(
-                    size: r.widthPercent(r.isSmallScreen ? 0.87 : 0.9),
+                    size: Responsive.w(90),
                     duration: const Duration(minutes: 5),
                     startPulse: 120,
                     breakTomato: 0,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../themes/app_assets.dart';
 import '../themes/app_theme.dart';
-import '../utils/app_responsive.dart';
+import '../utils/responsive.dart';
 import 'timer_widget.dart';
 import 'dart:math';
 
@@ -118,11 +118,15 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    final r = AppResponsive(context);
+    Responsive.init(context);
+print('screenWidth: ${Responsive.screenWidth}');
+print('Responsive.w(90): ${Responsive.w(90)}');
 
-    // ✅ Let Tomato decide size by screen width if not provided
     final double size = widget.size ??
-        min(r.widthPercent(r.tieredSize(small: 0.85, medium: 0.9, tablet: 0.92)), 600);
+    (Responsive.screenWidth >= 600 // tablet check
+        ? min(Responsive.w(90), 750) // allow larger on tablets
+        : min(Responsive.w(90), 600));
+
 
     final double timerOffset = size * 0.43;
 
@@ -142,7 +146,9 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
           child: DigitalTimer(
             key: timerKey,
             initialTime: widget.duration,
-            textStyle: AppTextStyles.timer.copyWith(fontSize: r.fontSize(54)),
+            textStyle: AppTextStyles.timer.copyWith(
+              fontSize: min(Responsive.sp(8), 54)
+              ),
             onTick: (remaining) {
               if (remaining.inSeconds <= widget.startPulse && !_isFastBreathing) {
                 setFastPulse();

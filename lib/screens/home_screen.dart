@@ -8,7 +8,7 @@ import 'short_break.dart';
 import 'long_break.dart';
 import '../widgets/break_messages.dart';
 import '../widgets/pomodoro_dialog.dart';
-import '../utils/app_responsive.dart';
+import '../utils/responsive.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final r = AppResponsive(context);
+    Responsive.init(context);
 
     return Scaffold(
       backgroundColor: AppColors.plumCalm,
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: r.tieredSize(small: 40, medium: 60, tablet: 80)),
+                  SizedBox(height: Responsive.h(6)),
 
                   // Break buttons
                   Row(
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      SizedBox(width: r.responsiveSize(12, 16)),
+                      SizedBox(width: Responsive.w(4)),
                       Expanded(
                         child: BreakButton(
                           label: 'Long Break',
@@ -63,13 +63,11 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  // 🆕 Adjust vertical space before Tomato
-                  SizedBox(height: r.tieredSize(small: 100, medium: 140, tablet: 180)),
+                  SizedBox(height: Responsive.h(18)),
 
-                  // 🍅 Tomato Clock with capped max width
+                  // 🍅 Tomato Clock
                   TomatoDisplay(
                     key: tomatoKey,
-                    
                     duration: const Duration(minutes: 25),
                     startPulse: 10,
                     breakTomato: 0,
@@ -89,21 +87,19 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    onReset: () {
-                      
-                    },
+                    onReset: () {},
                   ),
                 ],
               ),
             ),
 
-            // Orbiting logo
-           Positioned(
-            top: r.tieredSize(small: 400, medium: 490, tablet: 570), // 📏 adjust if needed
-            child: AppLogo(
-              size: r.tieredSize(small: 340, medium: 380, tablet: 540), // 🌀 size for arc
+            // 🌀 Orbiting Logo
+            Positioned(
+              top: Responsive.h(60), // You can fine-tune this
+              child: AppLogo(
+                size: Responsive.screenWidth.clamp(340.0, 540.0),
+              ),
             ),
-          ),
           ],
         ),
       ),
