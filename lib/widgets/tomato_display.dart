@@ -119,8 +119,7 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
-print('screenWidth: ${Responsive.screenWidth}');
-print('Responsive.w(90): ${Responsive.w(90)}');
+
 
     final double size = widget.size ??
     (Responsive.screenWidth >= 600 // tablet check
