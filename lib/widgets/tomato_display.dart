@@ -146,7 +146,7 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
             key: timerKey,
             initialTime: widget.duration,
             textStyle: AppTextStyles.timer.copyWith(
-              fontSize: min(Responsive.sp(8), 54)
+              fontSize: min(Responsive.sp(8), 50)
               ),
             onTick: (remaining) {
               if (remaining.inSeconds <= widget.startPulse && !_isFastBreathing) {
