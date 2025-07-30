@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart'; // 👈 you’ll create this next
-import 'utils/screen_awake.dart'; // 👈 import the new file
+import 'screens/home_screen.dart';
+import 'utils/screen_awake.dart';
+import 'utils/notification_service.dart'; // ✅ Add this import
+import 'utils/responsive.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+void requestNotificationPermission() async {
+  final status = await Permission.notification.status;
+  if (!status.isGranted) {
+    await Permission.notification.request();
+  }
+}
 
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ScreenAwake.enable(); // ✅ keeps screen on
+  await ScreenAwake.enable();
+  await NotificationService.init(); // ✅ Will now work
+  requestNotificationPermission(); // 👈 Add this
   runApp(const PomodoroApp());
 }
 
@@ -20,9 +31,9 @@ class PomodoroApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
-        fontFamily: 'RobotoMono', // optional weird font if you use it
+        fontFamily: 'RobotoMono',
       ),
-      home: HomeScreen(), // 👈 your landing page
+      home: HomeScreen(),
     );
   }
 }

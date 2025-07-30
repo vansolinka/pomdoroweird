@@ -3,8 +3,11 @@ import 'package:audioplayers/audioplayers.dart';
 import '../themes/app_assets.dart';
 import '../themes/app_theme.dart';
 import '../utils/responsive.dart';
+import '../utils/notification_service.dart';
 import 'timer_widget.dart';
 import 'dart:math';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 
 class TomatoDisplay extends StatefulWidget {
   final double? size;
@@ -14,6 +17,7 @@ class TomatoDisplay extends StatefulWidget {
   final VoidCallback? onStart;
   final VoidCallback? onComplete;
   final VoidCallback? onReset;
+  final String? notificationMessage;
 
   const TomatoDisplay({
     super.key,
@@ -24,6 +28,7 @@ class TomatoDisplay extends StatefulWidget {
     this.onStart,
     this.onComplete,
     this.onReset,
+    this.notificationMessage,
   });
 
   @override
@@ -51,6 +56,19 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
+    void _showCustomNotification(String message) {
+      const androidDetails = AndroidNotificationDetails(
+        'pomodoro_channel',
+        'Pomodoro Notifications',
+        channelDescription: 'Notifications for Pomodoro timer',
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+
+      const platformDetails = NotificationDetails(android: androidDetails);
+      NotificationService.showNotification(message);
+
+    }
 
   void resetFromOutside() {
     timerKey.currentState?.resetTimer();
@@ -160,7 +178,12 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
                 stopTomatoPulse();
                 player.resume();
                 widget.onComplete?.call();
+
+                if (widget.notificationMessage != null) {
+                  _showCustomNotification(widget.notificationMessage!);
+                }
               }
+
             },
           ),
         ),
@@ -243,5 +266,5 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
         ),
       ],
     );
-  }
+  }  
 }

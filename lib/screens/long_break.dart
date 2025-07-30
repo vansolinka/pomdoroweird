@@ -130,6 +130,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                     startPulse: 120,
                     breakTomato: 0,
                     onStart: _refreshMessage,
+                    notificationMessage: 'Break is up! Time to work 🏋️‍♀️', // ✅ This triggers the notification inside TomatoDisplay
                   ),
                 ],
               ),

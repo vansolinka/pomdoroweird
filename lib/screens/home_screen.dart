@@ -10,6 +10,7 @@ import '../widgets/break_messages.dart';
 import '../widgets/pomodoro_dialog.dart';
 import '../utils/responsive.dart';
 
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
@@ -71,32 +72,32 @@ class HomeScreen extends StatelessWidget {
                             : Responsive.h(18), // default for phone
                   ),
                   
-
                   // 🍅 Tomato Clock
-                  TomatoDisplay(
-                    key: tomatoKey,
-                    size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
-                    duration: const Duration(minutes: 2),
-                    startPulse: 10,
-                    breakTomato: 0,
-                    onStart: () {},
-                    onComplete: () {
-                      final random = Random();
-                      final message = endPomodoroMessages[random.nextInt(endPomodoroMessages.length)];
+                 TomatoDisplay(
+                  key: tomatoKey,
+                  size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
+                  duration: const Duration(minutes: 1),
+                  startPulse: 10,
+                  breakTomato: 0,
+                  onStart: () {},
+                  onComplete: () {
+                    final random = Random();
+                    final message = endPomodoroMessages[random.nextInt(endPomodoroMessages.length)];
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => PomodoroEndDialog(
+                        message: message,
+                        onReplay: () {
+                          tomatoKey.currentState?.resetFromOutside();
+                        },
+                      ),
+                    );
+                  },
+                  onReset: () {},
+                  notificationMessage: 'Pomodoro is up! Time to rest 🍵', // ✅ This triggers the notification inside TomatoDisplay
+                ),
 
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => PomodoroEndDialog(
-                          message: message,
-                          onReplay: () {
-                            tomatoKey.currentState?.resetFromOutside();
-                          },
-                        ),
-                      );
-                    },
-                    onReset: () {},
-                  ),
                 ],
               ),
             ),

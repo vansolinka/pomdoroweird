@@ -1,8 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.pomdoroweird">
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="Pomodoro Weird"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
