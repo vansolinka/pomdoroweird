@@ -12,6 +12,7 @@ class NotificationService {
     );
 
     await _plugin.initialize(initializationSettings);
+
   }
 
   static Future<void> showNotification(String message) async {
@@ -26,6 +27,8 @@ class NotificationService {
       playSound: true,
       enableVibration: true,
       icon: 'ic_stat_pw', // default app icon
+      fullScreenIntent: true, // 👈 Forces popup on lock screen
+      visibility: NotificationVisibility.public, // 👈 Ensures lockscreen visibility
     );
 
 

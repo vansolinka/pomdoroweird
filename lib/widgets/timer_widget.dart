@@ -5,52 +5,74 @@ import '../themes/app_theme.dart';
 class DigitalTimer extends StatefulWidget {
   final Duration initialTime;
   final TextStyle? textStyle;
-  final void Function(Duration)? onTick; // 👈 onTick callback
+  final void Function(Duration)? onTick;
+  final VoidCallback? onComplete;
 
   const DigitalTimer({
     super.key,
     required this.initialTime,
     this.textStyle,
-    this.onTick, // 👈 Add it to the constructor too
+    this.onTick,
+    this.onComplete,
   });
 
   @override
-  State<DigitalTimer> createState() => DigitalTimerState();
+  DigitalTimerState createState() => DigitalTimerState();
 }
 
 class DigitalTimerState extends State<DigitalTimer> {
-  late Duration _remaining;
   Timer? _timer;
+  DateTime? _endTime;
+  Duration _lastDuration = Duration.zero;
+
+  bool get _isRunning => _endTime != null;
 
   @override
   void initState() {
     super.initState();
-    _remaining = widget.initialTime;
+    _lastDuration = widget.initialTime;
   }
 
   void startTimer() {
+    _endTime = DateTime.now().add(_lastDuration);
+
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_remaining.inSeconds > 0) {
-        setState(() {
-          _remaining -= const Duration(seconds: 1);
-        });
-        widget.onTick?.call(_remaining); // ✅ Call the onTick callback
-      } else {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      final remaining = _getRemaining();
+      if (remaining <= Duration.zero) {
         _timer?.cancel();
+        _endTime = null;
+        widget.onTick?.call(Duration.zero); // ensure last tick is 00:00
+        widget.onComplete?.call();
+      } else {
+        widget.onTick?.call(remaining);
       }
+      setState(() {});
     });
+
+    setState(() {});
   }
 
   void pauseTimer() {
-    _timer?.cancel();
+    if (_isRunning) {
+      _lastDuration = _getRemaining();
+      _endTime = null;
+      _timer?.cancel();
+      setState(() {});
+    }
   }
 
   void resetTimer() {
     _timer?.cancel();
-    setState(() {
-      _remaining = widget.initialTime;
-    });
+    _endTime = null;
+    _lastDuration = widget.initialTime;
+    setState(() {});
+  }
+
+  Duration _getRemaining() {
+    if (_endTime == null) return _lastDuration;
+    final remaining = _endTime!.difference(DateTime.now());
+    return remaining.isNegative ? Duration.zero : remaining;
   }
 
   String _format(Duration d) {
@@ -67,8 +89,9 @@ class DigitalTimerState extends State<DigitalTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final remaining = _getRemaining();
     return StrokedText(
-      text: _format(_remaining),
+      text: _format(remaining),
       style: widget.textStyle ?? AppTextStyles.timer,
       strokeColor: Colors.black,
       strokeWidth: 2,
@@ -94,7 +117,6 @@ class StrokedText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Stroke
         Text(
           text,
           style: style.copyWith(
@@ -104,7 +126,6 @@ class StrokedText extends StatelessWidget {
               ..color = strokeColor,
           ),
         ),
-        // Fill
         Text(
           text,
           style: style,
