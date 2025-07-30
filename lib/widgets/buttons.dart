@@ -27,7 +27,7 @@ class BreakButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: Responsive.w(6),   // 6% of screen width
+            horizontal: Responsive.w(3),   // 6% of screen width
             vertical: Responsive.h(1.8),   // 1.8% of screen height
           ),
           child: FittedBox(

@@ -62,7 +62,7 @@ class PomodoroEndDialog extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(width: Responsive.w(4)),
+              SizedBox(width: Responsive.w(3)),
               BreakButton(
                 label: 'Replay',
                 onPressed: () {

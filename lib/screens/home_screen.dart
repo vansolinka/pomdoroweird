@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                   TomatoDisplay(
                     key: tomatoKey,
                     size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
-                    duration: const Duration(minutes: 25),
+                    duration: const Duration(minutes: 2),
                     startPulse: 10,
                     breakTomato: 0,
                     onStart: () {},
