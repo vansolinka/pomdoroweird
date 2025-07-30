@@ -46,7 +46,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: Responsive.h(6)),
+                  SizedBox(height: Responsive.h(3)),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +123,7 @@ class _ShortBreakScreenState extends State<ShortBreakScreen> {
                   SizedBox(height: Responsive.h(2)),
 
                   TomatoDisplay(
-                    size: Responsive.w(90),
+size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
                     duration: const Duration(minutes: 5),
                     startPulse: 120,
                     breakTomato: 0,

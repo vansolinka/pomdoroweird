@@ -63,11 +63,19 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: Responsive.h(18)),
+                  SizedBox(
+                    height: Responsive.isTabletLandscape()
+                        ? Responsive.h(6) // smaller in landscape
+                        : Responsive.isTablet()
+                            ? Responsive.h(8) // default for portrait tablet
+                            : Responsive.h(18), // default for phone
+                  ),
+                  
 
                   // 🍅 Tomato Clock
                   TomatoDisplay(
                     key: tomatoKey,
+                    size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
                     duration: const Duration(minutes: 25),
                     startPulse: 10,
                     breakTomato: 0,

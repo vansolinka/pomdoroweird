@@ -22,6 +22,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
   void initState() {
     super.initState();
     _refreshMessage();
+
   }
 
   void _refreshMessage() {
@@ -49,7 +50,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: Responsive.h(6)),
+                  SizedBox(height: Responsive.h(3)),
 
                   Center(
                     child: BreakButton(
@@ -124,7 +125,7 @@ class _LongBreakScreenState extends State<LongBreakScreen> {
                   SizedBox(height: Responsive.h(2)),
 
                   TomatoDisplay(
-                    size: min(Responsive.w(90), 600),
+                    size: Responsive.isTabletLandscape() ? Responsive.w(35) : Responsive.w(90),
                     duration: const Duration(minutes: 15),
                     startPulse: 120,
                     breakTomato: 0,

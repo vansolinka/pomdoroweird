@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart'; // 👈 you’ll create this next
+import 'utils/screen_awake.dart'; // 👈 import the new file
 
-void main() {
+
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenAwake.enable(); // ✅ keeps screen on
   runApp(const PomodoroApp());
 }
 

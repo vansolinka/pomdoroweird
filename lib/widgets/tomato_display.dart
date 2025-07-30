@@ -126,8 +126,11 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
         ? min(Responsive.w(90), 750) // allow larger on tablets
         : min(Responsive.w(90), 600));
 
-
-    final double timerOffset = size * 0.43;
+      final double timerOffset = Responsive.isTabletLandscape()
+          ? size * 0.49   // slightly more for wide layout
+          : Responsive.isTablet()
+              ? size * 0.47
+              : size * 0.44;
 
     return Stack(
       alignment: Alignment.center,
@@ -163,9 +166,18 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
         ),
 
         Positioned(
-          bottom: size * 0.17,
-          left: size * 0.22,
-          child: _animatedOrStatic(
+          bottom: Responsive.isTabletLandscape()
+              ? size * 0.20
+              : Responsive.isTablet()
+                  ? size * 0.27
+                  : size * 0.16,
+
+          left: Responsive.isTabletLandscape()
+              ? size * 0.20
+              : Responsive.isTablet()
+                  ? size * 0.29
+                  : size * 0.22,
+        child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.replayButton,
               size: size * 0.18,
@@ -181,8 +193,17 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
         ),
 
         Positioned(
-          bottom: size * 0.17,
-          left: size * 0.41,
+          bottom: Responsive.isTabletLandscape()
+              ? size * 0.20
+              : Responsive.isTablet()
+                  ? size * 0.27
+                  : size * 0.16,
+
+          left: Responsive.isTabletLandscape()
+              ? size * 0.42
+              : Responsive.isTablet()
+                  ? size * 0.42
+                  : size * 0.42,
           child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.playButton,
@@ -197,8 +218,18 @@ class TomatoDisplayState extends State<TomatoDisplay> with SingleTickerProviderS
         ),
 
         Positioned(
-          bottom: size * 0.19,
-          left: size * 0.58,
+          bottom: Responsive.isTabletLandscape()
+              ? size * 0.21
+              : Responsive.isTablet()
+                  ? size * 0.29
+                  : size * 0.18,
+
+          left: Responsive.isTabletLandscape()
+              ? size * 0.61
+              : Responsive.isTablet()
+                  ? size * 0.53
+                  : size * 0.60,
+
           child: _animatedOrStatic(
             child: _buildIconButton(
               assetPath: AppAssets.pauseButton,
